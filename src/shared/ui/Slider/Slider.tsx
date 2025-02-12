@@ -8,7 +8,7 @@ import styles from './Slider.module.scss';
 
 interface ISliderProps {
   slides: {
-    id: number;
+    id: n;
     title: string;
     img: string;
   }[];

@@ -1,3 +1,15 @@
+import './styles/main.scss';
+
+import { useEffect } from 'react';
+
+import { Router } from './router/Router.tsx';
+
 export const App = () => {
-  return <div>app</div>;
+  useEffect(() => {
+    navigator.mediaDevices
+      ?.enumerateDevices()
+      .then((devices) => console.log(devices));
+  }, []);
+
+  return <Router />;
 };

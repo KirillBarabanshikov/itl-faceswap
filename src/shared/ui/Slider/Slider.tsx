@@ -1,3 +1,5 @@
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-expect-error
 import 'swiper/css';
 
 import clsx from 'clsx';
@@ -8,7 +10,7 @@ import styles from './Slider.module.scss';
 
 interface ISliderProps {
   slides: {
-    id: n;
+    id: number;
     title: string;
     img: string;
   }[];

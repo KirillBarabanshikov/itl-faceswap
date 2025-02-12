@@ -3,8 +3,12 @@
 import 'swiper/css';
 
 import clsx from 'clsx';
-import { FC } from 'react';
+import { FC, useState } from 'react';
+import { Swiper as SwiperType } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
+
+import ArrowLeft from '@/shared/assets/icons/arrow_left.svg?react';
+import ArrowRight from '@/shared/assets/icons/arrow_right.svg?react';
 
 import styles from './Slider.module.scss';
 
@@ -23,13 +27,24 @@ export const Slider: FC<ISliderProps> = ({
   selectedSlideId,
   onSelect,
 }) => {
+  const [swiper, setSwiper] = useState<SwiperType>();
+  const [activeIndex, setActiveIndex] = useState(0);
+
   return (
-    <div>
+    <div className={styles.slider}>
+      <button
+        onClick={() => swiper?.slidePrev()}
+        disabled={activeIndex === 0}
+        className={clsx(styles.btn, styles.prev)}
+      >
+        <ArrowLeft />
+      </button>
+
       <Swiper
         spaceBetween={32}
         slidesPerView={3}
-        onSlideChange={() => console.log('slide change')}
-        onSwiper={(swiper) => console.log(swiper)}
+        onSlideChange={(swiper) => setActiveIndex(swiper.realIndex)}
+        onSwiper={(swiper) => setSwiper(swiper)}
       >
         {slides.map((slide) => (
           <SwiperSlide key={slide.id}>
@@ -41,11 +56,19 @@ export const Slider: FC<ISliderProps> = ({
               )}
             >
               <div className={styles.title}>{slide.title}</div>
-              <img src={slide.img} alt={''} className={styles.image} />
+              <img src={slide.img} alt={slide.title} className={styles.image} />
             </div>
           </SwiperSlide>
         ))}
       </Swiper>
+
+      <button
+        onClick={() => swiper?.slideNext()}
+        disabled={activeIndex === slides.length - 3}
+        className={clsx(styles.btn, styles.next)}
+      >
+        <ArrowRight />
+      </button>
     </div>
   );
 };

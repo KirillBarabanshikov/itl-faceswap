@@ -1,18 +1,57 @@
-.slide {
-  border-radius: 72px;
-  padding: 48px;
-  width: 656px;
-  height: 874px;
-  background-color: #f1faff;
-  transition: background-color var(--transition-duration);
+@use '@/app/styles/helpers' as *;
 
-  &.selected {
-    background-color: var(--accent);
+.slider {
+  position: relative;
+
+  .slide {
+    border-radius: 72px;
+    padding: 48px;
+    width: 656px;
+    height: 874px;
+    background-color: #f1faff;
+    transition: background-color var(--transition-duration);
+
+    &.selected {
+      background-color: var(--accent);
+
+      .title {
+        font-weight: 700;
+        color: var(--white);
+      }
+    }
+
+    .title {
+      font-size: 32px;
+      line-height: 1.2;
+      color: var(--secondary);
+      transition: color var(--transition-duration);
+    }
   }
 
-  .title {
-    font-size: 32px;
-    line-height: 1.2;
-    color: var(--secondary);
+  .btn {
+    @include square(72px);
+    @include flex-center();
+    @include abs-y();
+    z-index: 2;
+
+    border-radius: 64px;
+    padding: 16px;
+    box-shadow: 0 8px 12px 0 rgba(88, 104, 124, 0.15);
+    background: var(--white);
+    border: unset;
+    color: var(--accent);
+
+    &.prev {
+      left: 32px;
+    }
+
+    &.next {
+      right: 32px;
+    }
+
+    &:disabled {
+      pointer-events: none;
+      opacity: 0.3;
+    }
   }
 }

@@ -1,0 +1,14 @@
+@use 'helpers' as *;
+
+:root {
+  --accent: #26aff0;
+  --white: #fff;
+  --primary: #2d3744;
+  --secondary: #58687c;
+  --third: #8696a9;
+
+  --font-famaly-base: 'TT Norms', sans-serif;
+  --font-famaly-accent: 'EuropeExt', sans-serif;
+
+  --transition-duration: 0.2s;
+}

@@ -1,7 +1,7 @@
 import { AnimatePresence, motion } from 'framer-motion';
 import { Outlet, Route, Routes, useLocation } from 'react-router-dom';
 
-import { Home } from '@/pages';
+import { Home, Person } from '@/pages';
 
 export const Router = () => {
   const location = useLocation();
@@ -11,6 +11,7 @@ export const Router = () => {
       <Routes location={location} key={location.pathname}>
         <Route element={<AnimationLayout />}>
           <Route index element={<Home />} />
+          <Route path={'person'} element={<Person />} />
         </Route>
       </Routes>
     </AnimatePresence>
@@ -23,7 +24,6 @@ const AnimationLayout = () => {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      style={{ display: 'contents' }}
     >
       <Outlet />
     </motion.div>

@@ -1,3 +1,5 @@
+import { useNavigate } from 'react-router-dom';
+
 import hand from '@/shared/assets/images/hand.png';
 import logo from '@/shared/assets/images/logo.svg';
 import persons from '@/shared/assets/images/persons.png';
@@ -5,8 +7,10 @@ import persons from '@/shared/assets/images/persons.png';
 import styles from './Home.module.scss';
 
 export const Home = () => {
+  const navigate = useNavigate();
+
   return (
-    <div className={styles.home}>
+    <div className={styles.home} onClick={() => navigate('/person')}>
       <img
         src={logo}
         alt={''}

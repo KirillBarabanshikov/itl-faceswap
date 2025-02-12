@@ -1,0 +1,18 @@
+.slide {
+  border-radius: 72px;
+  padding: 48px;
+  width: 656px;
+  height: 874px;
+  background-color: #f1faff;
+  transition: background-color var(--transition-duration);
+
+  &.selected {
+    background-color: var(--accent);
+  }
+
+  .title {
+    font-size: 32px;
+    line-height: 1.2;
+    color: var(--secondary);
+  }
+}

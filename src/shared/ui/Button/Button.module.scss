@@ -1,0 +1,27 @@
+@use '@/app/styles/helpers' as *;
+
+.button {
+  @include flex-center(true);
+  column-gap: 36px;
+  border: unset;
+  background-color: transparent;
+  border-radius: 72px;
+  padding: 40px 80px;
+  height: 138px;
+
+  font-weight: 700;
+  font-size: 48px;
+  line-height: 1.2;
+  text-align: center;
+
+  &.solid {
+    background: var(--accent);
+    color: var(--white);
+  }
+
+  &.outline {
+    outline: 6px solid var(--accent);
+    outline-offset: -6px;
+    color: var(--accent);
+  }
+}

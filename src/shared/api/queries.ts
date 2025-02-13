@@ -41,16 +41,21 @@ export async function sendImageResult(body: {
     const response = await apiInstance.post<{
       id: number;
       image: string;
-    }>('/image_results');
-    return response.data;
+    }>('/image_results', formData);
+    return { ...response.data, image: API_URL + response.data.image };
   } catch (error) {
     throw new Error(`Failed to send image result: ${error}`);
   }
 }
 
-// export function fetchQr() {
-//   try {
-//   } catch (error) {
-//     throw new Error(`Failed to send image result: ${error}`);
-//   }
-// }
+export async function fetchQr(id: number) {
+  try {
+    const response = await apiInstance.post<{ qr: string }>(
+      '/image_results/telegram_qr',
+      { imageResults: [id] },
+    );
+    return response.data;
+  } catch (error) {
+    throw new Error(`Failed to fetch qr: ${error}`);
+  }
+}

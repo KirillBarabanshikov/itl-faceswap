@@ -1,17 +1,30 @@
-import { useNavigate } from 'react-router-dom';
+import { useQuery } from '@tanstack/react-query';
+import { useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 
+import { fetchQr } from '@/shared/api/queries.ts';
 import ReloadIcon from '@/shared/assets/icons/reload.svg?react';
-import { Button } from '@/shared/ui';
+import { TG_BOT_CODE, TG_BOT_NAME } from '@/shared/consts';
+import { Button, Modal } from '@/shared/ui';
 
 import styles from './Final.module.scss';
 
 export const Final = () => {
+  const [isOpen, setIsOpen] = useState(false);
+  const [showHint, setShowHint] = useState(false);
   const navigate = useNavigate();
+  const location = useLocation();
+  const { id, image } = location.state as { id: number; image: string };
+
+  const { data } = useQuery({
+    queryKey: ['qr', id],
+    queryFn: () => fetchQr(id),
+  });
 
   return (
     <div className={styles.final}>
       <img
-        src={'/bg2.png'}
+        src={image}
         alt={''}
         width={2160}
         height={3840}
@@ -22,8 +35,44 @@ export const Final = () => {
         <Button variant={'outline'} onClick={() => navigate('/scene')}>
           <ReloadIcon /> Попробовать еще раз
         </Button>
-        <Button>Сохранить фотографию</Button>
+        <Button onClick={() => setIsOpen(true)}>Сохранить фотографию</Button>
       </div>
+      <Modal isOpen={isOpen} onClose={() => setIsOpen(false)}>
+        <div className={styles.modelInner}>
+          <h2 className={styles.title}>сканируйте QR-код для получения фото</h2>
+          <p className={styles.subtitle}>
+            Сканируйте QR-код для получения фотографии.
+          </p>
+          <img
+            src={'/qr.png'}
+            alt={''}
+            width={461}
+            height={461}
+            className={styles.qr}
+          />
+          {data && (
+            <div
+              className={styles.qrWrap}
+              dangerouslySetInnerHTML={{ __html: data.qr }}
+            />
+          )}
+          {!showHint ? (
+            <div
+              onClick={() => setShowHint(true)}
+              className={styles.hintTrigger}
+            >
+              Не получается сканировать qr-код?
+            </div>
+          ) : (
+            <div className={styles.hint}>
+              Наберите в поиске <span>{TG_BOT_NAME}</span>, затем отправьте
+              сообщение “<span>{TG_BOT_CODE}</span>”, вам <span>ответит</span>{' '}
+              бот и <span>пришлет</span> вашу фотографию
+            </div>
+          )}
+          <Button onClick={() => navigate('/')}>На главную</Button>
+        </div>
+      </Modal>
     </div>
   );
 };

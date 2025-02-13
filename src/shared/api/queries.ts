@@ -47,3 +47,10 @@ export async function sendImageResult(body: {
     throw new Error(`Failed to send image result: ${error}`);
   }
 }
+
+// export function fetchQr() {
+//   try {
+//   } catch (error) {
+//     throw new Error(`Failed to send image result: ${error}`);
+//   }
+// }

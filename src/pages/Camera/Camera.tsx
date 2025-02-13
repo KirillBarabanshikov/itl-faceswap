@@ -1,6 +1,7 @@
 import { useRef, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
+import { sendImageResult } from '@/shared/api/queries.ts';
 import frame from '@/shared/assets/images/frame.png';
 import { TIMER } from '@/shared/consts';
 import { CameraFeed, Loader, Timer } from '@/shared/ui';
@@ -13,6 +14,12 @@ export const Camera = () => {
   const [showTimer, setShowTimer] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
+  const location = useLocation();
+
+  const { costumeId, backgroundId } = location.state as {
+    costumeId: number;
+    backgroundId: number;
+  };
 
   const createPhoto = (): Promise<File | undefined> => {
     const canvas = canvasRef.current;
@@ -39,13 +46,14 @@ export const Camera = () => {
       setIsLoading(true);
       videoRef.current?.pause();
       setShowTimer(false);
-      const photo = await createPhoto();
-      if (photo) {
-        console.log(photo);
+      const userImage = await createPhoto();
+      if (userImage) {
+        await sendImageResult({ userImage, costumeId, backgroundId });
         navigate('/final');
       }
     } catch (error) {
       console.error(error);
+      navigate('/');
     } finally {
       setIsLoading(false);
     }

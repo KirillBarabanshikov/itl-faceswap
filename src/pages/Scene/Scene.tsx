@@ -46,7 +46,12 @@ export const Scene = () => {
 
   const handleNavigate = () => {
     if (showScenes) {
-      navigate('/camera');
+      navigate('/camera', {
+        state: {
+          costumeId: selectedCostume?.id,
+          backgroundId: selectedScene?.id,
+        },
+      });
     } else {
       setShowScenes(true);
       setSlides(scenes as never[]);

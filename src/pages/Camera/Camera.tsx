@@ -47,7 +47,7 @@ export const Camera = () => {
     } catch (error) {
       console.error(error);
     } finally {
-      // setIsLoading(false);
+      setIsLoading(false);
     }
   };
 

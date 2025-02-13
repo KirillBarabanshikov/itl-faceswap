@@ -62,13 +62,14 @@
 
       .image {
         position: absolute;
-        top: 0;
+        top: 70px;
         left: 0;
         width: 100%;
         height: 100%;
         object-fit: contain;
 
         &.cover {
+          top: 0;
           border-radius: 72px;
           object-fit: cover;
         }

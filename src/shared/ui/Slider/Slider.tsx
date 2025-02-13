@@ -17,7 +17,7 @@ interface ISliderProps {
   slides: {
     id: number;
     title?: string;
-    img: string;
+    image: string;
   }[];
   selectedSlideId?: number;
   onSelect: (id: number) => void;
@@ -73,7 +73,8 @@ export const Slider: FC<ISliderProps> = ({
                   <div className={styles.title}>{slide.title}</div>
                 )}
                 <img
-                  src={slide.img}
+                  key={slide.image}
+                  src={slide.image}
                   alt={slide.title}
                   className={clsx(styles.image, coverImages && styles.cover)}
                 />

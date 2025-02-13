@@ -1,41 +1,46 @@
+import { useQuery } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+import { fetchCostumes, fetchScenes } from '@/shared/api/queries.ts';
 import Arrow from '@/shared/assets/icons/arrow.svg?react';
+import { ICostume, IScene } from '@/shared/types';
 import { Button, Slider } from '@/shared/ui';
 
 import styles from './Scene.module.scss';
 
-const costumes = [
-  { id: 1, title: 'Лёня Карп', img: '/img.png' },
-  { id: 2, title: 'Невеста 1', img: '/img.png' },
-  { id: 3, title: 'Невеста 2', img: '/img.png' },
-  { id: 4, title: 'Невеста 3', img: '/img.png' },
-];
-
-const scenes = [
-  { id: 1, img: '/bg.png' },
-  { id: 2, img: '/bg.png' },
-  { id: 3, img: '/bg.png' },
-  { id: 4, img: '/bg.png' },
-];
-
 export const Scene = () => {
   const [slides, setSlides] = useState([]);
-  const [selectedCostume, setSelectedCostume] = useState<number>();
-  const [selectedScene, setSelectedScene] = useState<number>();
+  const [selectedCostume, setSelectedCostume] = useState<ICostume>();
+  const [selectedScene, setSelectedScene] = useState<IScene>();
   const [showScenes, setShowScenes] = useState(false);
   const navigate = useNavigate();
 
+  const { data: costumes } = useQuery({
+    queryKey: ['costumes'],
+    queryFn: fetchCostumes,
+  });
+
+  const { data: scenes } = useQuery({
+    queryKey: ['scenes'],
+    queryFn: fetchScenes,
+  });
+
   useEffect(() => {
+    if (!costumes || !scenes) return;
+
     setSlides(costumes as never[]);
-  }, []);
+    setSelectedCostume(costumes.length ? costumes[0] : undefined);
+    setSelectedScene(scenes.length ? scenes[0] : undefined);
+  }, [costumes, scenes]);
 
   const handleSelect = (id: number) => {
     if (showScenes) {
-      setSelectedScene(id);
+      const scene = scenes?.find((scene) => scene.id === id);
+      setSelectedScene(scene);
     } else {
-      setSelectedCostume(id);
+      const costume = costumes?.find((costume) => costume.id === id);
+      setSelectedCostume(costume);
     }
   };
 
@@ -48,14 +53,20 @@ export const Scene = () => {
     }
   };
 
+  if (!costumes || !scenes) return <></>;
+
   return (
     <div
       className={styles.person}
-      style={{ backgroundImage: showScenes ? 'url(/bg.png)' : 'initial' }}
+      style={{
+        backgroundImage: showScenes
+          ? `url(${selectedScene?.image})`
+          : 'initial',
+      }}
     >
-      <h1 className={styles.title}>Лёня Карп</h1>
+      <h1 className={styles.title}>{selectedCostume?.title}</h1>
       <img
-        src={'/img.png'}
+        src={selectedCostume?.image}
         alt={''}
         width={1466}
         height={3348}
@@ -63,7 +74,7 @@ export const Scene = () => {
       />
       <Slider
         slides={slides}
-        selectedSlideId={showScenes ? selectedScene : selectedCostume}
+        selectedSlideId={showScenes ? selectedScene?.id : selectedCostume?.id}
         onSelect={(id) => handleSelect(id)}
         title={showScenes ? 'Фоновое изображение' : 'Персонажи'}
         actionSlot={

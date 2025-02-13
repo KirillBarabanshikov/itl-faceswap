@@ -1,0 +1,27 @@
+@use '@/app/styles/helpers' as *;
+
+.timerWrapper {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 408px;
+  height: 603px;
+
+  .number {
+    @include flex-center();
+    @include square(408px);
+
+    border-radius: 400px;
+    font-family: var(--font-famaly-accent);
+    font-weight: 700;
+    font-size: 264px;
+    line-height: 1;
+    letter-spacing: -0.04em;
+    text-transform: uppercase;
+    color: var(--accent);
+
+    position: absolute;
+    background-color: var(--white);
+  }
+}

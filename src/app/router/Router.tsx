@@ -1,7 +1,7 @@
 import { AnimatePresence, motion } from 'framer-motion';
 import { Outlet, Route, Routes, useLocation } from 'react-router-dom';
 
-import { Home, Scene } from '@/pages';
+import { Camera, Home, Scene } from '@/pages';
 
 export const Router = () => {
   const location = useLocation();
@@ -12,6 +12,7 @@ export const Router = () => {
         <Route element={<AnimationLayout />}>
           <Route index element={<Home />} />
           <Route path={'scene'} element={<Scene />} />
+          <Route path={'camera'} element={<Camera />} />
         </Route>
       </Routes>
     </AnimatePresence>

@@ -1,0 +1,25 @@
+.overlay {
+  position: fixed;
+  inset: 0;
+  background-color: #292929b2;
+  z-index: 10;
+}
+
+.modalWrap {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  z-index: 11;
+  padding: 66px;
+
+  .modalBody {
+    padding: 64px;
+    background-color: var(--white);
+    border-radius: 64px;
+    pointer-events: initial;
+  }
+}

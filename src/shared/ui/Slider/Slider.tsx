@@ -23,6 +23,7 @@ interface ISliderProps {
   onSelect: (id: number) => void;
   title?: string;
   actionSlot?: ReactNode;
+  coverImages?: boolean;
   className?: string;
 }
 
@@ -32,6 +33,7 @@ export const Slider: FC<ISliderProps> = ({
   onSelect,
   title,
   actionSlot,
+  coverImages,
   className,
 }) => {
   const [swiper, setSwiper] = useState<SwiperType>();
@@ -73,7 +75,7 @@ export const Slider: FC<ISliderProps> = ({
                 <img
                   src={slide.img}
                   alt={slide.title}
-                  className={styles.image}
+                  className={clsx(styles.image, coverImages && styles.cover)}
                 />
               </div>
             </SwiperSlide>

@@ -77,6 +77,7 @@ export const Scene = () => {
             </Button>
           </>
         }
+        coverImages={showScenes}
         className={styles.slider}
       />
     </div>

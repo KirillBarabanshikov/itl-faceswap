@@ -1,3 +1,4 @@
+export { BackgroundAnimation } from './BackgroundAnimation';
 export { Button } from './Button';
 export { CameraFeed } from './CameraFreed';
 export { Loader } from './Loader';

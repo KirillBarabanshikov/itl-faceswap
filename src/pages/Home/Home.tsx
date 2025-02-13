@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import hand from '@/shared/assets/images/hand.png';
 import logo from '@/shared/assets/images/logo.svg';
 import persons from '@/shared/assets/images/persons.png';
+import { BackgroundAnimation } from '@/shared/ui';
 
 import styles from './Home.module.scss';
 
@@ -36,6 +37,7 @@ export const Home = () => {
           className={styles.hintImage}
         />
       </div>
+      <BackgroundAnimation />
     </div>
   );
 };

@@ -48,12 +48,12 @@ export const Camera = () => {
       setShowTimer(false);
       const userImage = await createPhoto();
       if (userImage) {
-        const { id, image } = await sendImageResult({
+        const { id } = await sendImageResult({
           userImage,
           costumeId,
           backgroundId,
         });
-        navigate('/final', { state: { id, image } });
+        navigate('/final', { state: { id } });
       }
     } catch (error) {
       console.error(error);

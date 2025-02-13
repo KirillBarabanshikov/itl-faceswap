@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { fetchCostumes, fetchScenes } from '@/shared/api/queries.ts';
 import Arrow from '@/shared/assets/icons/arrow.svg?react';
 import { ICostume, IScene } from '@/shared/types';
-import { Button, Slider } from '@/shared/ui';
+import { BackgroundAnimation, Button, Slider } from '@/shared/ui';
 
 import styles from './Scene.module.scss';
 
@@ -58,7 +58,7 @@ export const Scene = () => {
     }
   };
 
-  if (!costumes || !scenes) return <></>;
+  if (!costumes || !scenes) return <BackgroundAnimation />;
 
   return (
     <div
@@ -96,6 +96,7 @@ export const Scene = () => {
         coverImages={showScenes}
         className={styles.slider}
       />
+      <BackgroundAnimation />
     </div>
   );
 };

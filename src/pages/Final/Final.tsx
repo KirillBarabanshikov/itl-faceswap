@@ -2,7 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 
-import { fetchQr } from '@/shared/api/queries.ts';
+import { fetchImageResult, fetchQr } from '@/shared/api/queries.ts';
 import ReloadIcon from '@/shared/assets/icons/reload.svg?react';
 import { TG_BOT_CODE, TG_BOT_NAME } from '@/shared/consts';
 import { Button, Modal } from '@/shared/ui';
@@ -14,22 +14,29 @@ export const Final = () => {
   const [showHint, setShowHint] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
-  const { id, image } = location.state as { id: number; image: string };
+  const { id } = location.state as { id: number };
 
-  const { data } = useQuery({
+  const { data: qr } = useQuery({
     queryKey: ['qr', id],
     queryFn: () => fetchQr(id),
   });
 
+  const { data: image } = useQuery({
+    queryKey: ['image', id],
+    queryFn: () => fetchImageResult(id),
+  });
+
   return (
     <div className={styles.final}>
-      <img
-        src={image}
-        alt={''}
-        width={2160}
-        height={3840}
-        className={styles.image}
-      />
+      {image && (
+        <img
+          src={image.image}
+          alt={''}
+          width={2160}
+          height={3840}
+          className={styles.image}
+        />
+      )}
       <div className={styles.actions}>
         <Button onClick={() => navigate('/')}>На главную</Button>
         <Button variant={'outline'} onClick={() => navigate('/scene')}>
@@ -43,17 +50,10 @@ export const Final = () => {
           <p className={styles.subtitle}>
             Сканируйте QR-код для получения фотографии.
           </p>
-          <img
-            src={'/qr.png'}
-            alt={''}
-            width={461}
-            height={461}
-            className={styles.qr}
-          />
-          {data && (
+          {qr && (
             <div
-              className={styles.qrWrap}
-              dangerouslySetInnerHTML={{ __html: data.qr }}
+              className={styles.qr}
+              dangerouslySetInnerHTML={{ __html: qr }}
             />
           )}
           {!showHint ? (

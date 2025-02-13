@@ -10,7 +10,7 @@ export const Home = () => {
   const navigate = useNavigate();
 
   return (
-    <div className={styles.home} onClick={() => navigate('/person')}>
+    <div className={styles.home} onClick={() => navigate('/scene')}>
       <img
         src={logo}
         alt={''}

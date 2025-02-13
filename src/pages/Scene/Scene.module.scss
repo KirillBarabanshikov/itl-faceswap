@@ -1,0 +1,27 @@
+@use '@/app/styles/helpers' as *;
+
+.person {
+  padding: 300px 64px;
+  height: 100vh;
+  background-repeat: no-repeat;
+  background-size: cover;
+
+  .title {
+    text-align: center;
+  }
+
+  .image {
+    position: absolute;
+    object-fit: contain;
+    bottom: 0;
+
+    @include abs-x();
+  }
+
+  .slider {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+  }
+}

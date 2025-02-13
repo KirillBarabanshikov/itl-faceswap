@@ -1,2 +1,2 @@
 export { Home } from './Home';
-export { Person } from './Person';
+export { Scene } from './Scene';

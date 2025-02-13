@@ -3,6 +3,9 @@ import './styles/main.scss';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { useEffect } from 'react';
 
+import { INACTIVITY_TIMEOUT } from '@/shared/consts';
+import { InactivityHandler } from '@/shared/handlers';
+
 import { Router } from './router/Router.tsx';
 
 const queryClient = new QueryClient({
@@ -22,6 +25,7 @@ export const App = () => {
 
   return (
     <QueryClientProvider client={queryClient}>
+      <InactivityHandler timeout={INACTIVITY_TIMEOUT} />
       <Router />
     </QueryClientProvider>
   );

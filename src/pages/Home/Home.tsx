@@ -5,6 +5,7 @@ import { fetchImageResult } from '@/shared/api/queries.ts';
 import hand from '@/shared/assets/images/hand.png';
 import logo from '@/shared/assets/images/logo.svg';
 import persons from '@/shared/assets/images/persons.png';
+import { API_URL } from '@/shared/consts';
 import { BackgroundAnimation } from '@/shared/ui';
 
 import styles from './Home.module.scss';
@@ -23,9 +24,8 @@ export const Home = () => {
     if (!image) return;
 
     const link = document.createElement('a');
-    link.href = image.image;
-    link.download = 'test.png';
-    link.target = '_blank';
+    link.href = API_URL + `/download/${image.id}`;
+    link.setAttribute('download', '');
     link.click();
   };
 

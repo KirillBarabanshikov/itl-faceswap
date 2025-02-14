@@ -1,5 +1,3 @@
-import { useNavigate } from 'react-router-dom';
-
 import hand from '@/shared/assets/images/hand.png';
 import logo from '@/shared/assets/images/logo.svg';
 import persons from '@/shared/assets/images/persons.png';
@@ -8,10 +6,8 @@ import { BackgroundAnimation } from '@/shared/ui';
 import styles from './Home.module.scss';
 
 export const Home = () => {
-  const navigate = useNavigate();
-
   return (
-    <div className={styles.home} onClick={() => navigate('/scene')}>
+    <div className={styles.home}>
       <img
         src={logo}
         alt={''}
@@ -28,7 +24,7 @@ export const Home = () => {
         className={styles.persons}
       />
       <div className={styles.hint}>
-        <div className={styles.hintText}>Коснитесь экрана</div>
+        <div className={styles.hintText}>Скачать</div>
         <img
           src={hand}
           alt={''}

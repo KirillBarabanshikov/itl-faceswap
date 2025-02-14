@@ -1,20 +1,27 @@
 @use '@/app/styles/helpers' as *;
 
 .home {
-  padding: 300px 54px;
+  padding: 50px 16px;
 
   .logo {
-    margin: 0 auto 300px auto;
+    margin: 0 auto 40px auto;
+    width: 60%;
+    max-width: 400px;
   }
 
   .title {
     text-align: center;
+    font-size: 28px;
   }
 
   .persons {
+    @include abs-x();
+
     position: absolute;
     bottom: 0;
     right: 0;
+    max-width: 500px;
+    width: 100%;
   }
 
   .hint {
@@ -22,18 +29,18 @@
     flex-direction: column;
     align-items: center;
 
-    border-radius: 1000px;
-    padding: 100px 64px;
-    width: 520px;
-    height: 520px;
+    padding: 30px 15px;
+    border-radius: 100px;
+    width: 100px;
+    height: 100px;
     background: var(--white);
-    bottom: 466px;
+    bottom: 80px;
 
     @include abs-x();
 
     .hintText {
       font-weight: 700;
-      font-size: 56px;
+      font-size: 16px;
       text-transform: uppercase;
       text-align: center;
       color: var(--accent);

@@ -6,12 +6,12 @@
 
   display: flex;
   flex-direction: column;
-  row-gap: 154px;
-  max-width: 2160px;
+  row-gap: 10px;
+  max-width: 100%;
   overflow: hidden;
 
   img {
-    min-width: 5119px;
-    height: 720px;
+    min-width: 200vw;
+    height: 25vh;
   }
 }

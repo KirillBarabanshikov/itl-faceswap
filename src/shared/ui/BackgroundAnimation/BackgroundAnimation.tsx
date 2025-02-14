@@ -18,25 +18,25 @@ export const BackgroundAnimation: FC = () => {
       <motion.img
         src={itlImage}
         alt={''}
-        animate={{ x: ['-142px', '-3000px'] }}
+        animate={{ x: ['-50px', '-100vw'] }}
         transition={transition}
       />
       <motion.img
         src={itlImage}
         alt={''}
-        animate={{ x: ['-2467px', 0] }}
+        animate={{ x: ['-50vh', 0] }}
         transition={transition}
       />
       <motion.img
         src={itlImage}
         alt={''}
-        animate={{ x: ['-142px', '-3000px'] }}
+        animate={{ x: ['-50px', '-100vw'] }}
         transition={transition}
       />
       <motion.img
         src={itlImage}
         alt={''}
-        animate={{ x: ['-2467px', 0] }}
+        animate={{ x: ['-50vh', 0] }}
         transition={transition}
       />
     </div>

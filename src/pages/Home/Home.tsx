@@ -22,7 +22,7 @@ export const Home = () => {
   const download = () => {
     if (!image) return;
 
-    fetch(image.image)
+    fetch(image.image, { mode: 'no-cors' })
       .then((response) => response.blob())
       .then((blob) => {
         const link = document.createElement('a');

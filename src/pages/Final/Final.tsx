@@ -2,35 +2,35 @@ import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 
-import { fetchImageResult, fetchQr } from '@/shared/api/queries.ts';
+import { fetchQr } from '@/shared/api/queries.ts';
 import ReloadIcon from '@/shared/assets/icons/reload.svg?react';
-import { TG_BOT_CODE, TG_BOT_NAME } from '@/shared/consts';
+// import { TG_BOT_CODE, TG_BOT_NAME } from '@/shared/consts';
 import { Button, Modal } from '@/shared/ui';
 
 import styles from './Final.module.scss';
 
 export const Final = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [showHint, setShowHint] = useState(false);
+  // const [showHint, setShowHint] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
-  const { id } = location.state as { id: number };
+  const { id, result } = location.state as { id: number; result: string };
 
   const { data: qr } = useQuery({
     queryKey: ['qr', id],
     queryFn: () => fetchQr(id),
   });
 
-  const { data: image } = useQuery({
-    queryKey: ['image', id],
-    queryFn: () => fetchImageResult(id),
-  });
+  // const { data: image } = useQuery({
+  //   queryKey: ['image', id],
+  //   queryFn: () => fetchImageResult(id),
+  // });
 
   return (
     <div className={styles.final}>
-      {image && (
+      {result && (
         <img
-          src={image.image}
+          src={result}
           alt={''}
           width={2160}
           height={3840}
@@ -56,20 +56,20 @@ export const Final = () => {
               dangerouslySetInnerHTML={{ __html: qr }}
             />
           )}
-          {!showHint ? (
-            <div
-              onClick={() => setShowHint(true)}
-              className={styles.hintTrigger}
-            >
-              Не получается сканировать qr-код?
-            </div>
-          ) : (
-            <div className={styles.hint}>
-              Наберите в поиске <span>{TG_BOT_NAME}</span>, затем отправьте
-              сообщение “<span>{TG_BOT_CODE}</span>”, вам <span>ответит</span>{' '}
-              бот и <span>пришлет</span> вашу фотографию
-            </div>
-          )}
+          {/*{!showHint ? (*/}
+          {/*  <div*/}
+          {/*    onClick={() => setShowHint(true)}*/}
+          {/*    className={styles.hintTrigger}*/}
+          {/*  >*/}
+          {/*    Не получается сканировать qr-код?*/}
+          {/*  </div>*/}
+          {/*) : (*/}
+          {/*  <div className={styles.hint}>*/}
+          {/*    Наберите в поиске <span>{TG_BOT_NAME}</span>, затем отправьте*/}
+          {/*    сообщение “<span>{TG_BOT_CODE}</span>”, вам <span>ответит</span>{' '}*/}
+          {/*    бот и <span>пришлет</span> вашу фотографию*/}
+          {/*  </div>*/}
+          {/*)}*/}
           <Button onClick={() => navigate('/')}>На главную</Button>
         </div>
       </Modal>

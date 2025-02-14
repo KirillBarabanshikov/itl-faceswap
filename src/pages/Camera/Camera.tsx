@@ -53,7 +53,12 @@ export const Camera = () => {
           costumeId,
           backgroundId,
         });
-        navigate('/final', { state: { id } });
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          const result = e.target!.result;
+          navigate('/final', { state: { id, result } });
+        };
+        reader.readAsDataURL(userImage);
       }
     } catch (error) {
       console.error(error);

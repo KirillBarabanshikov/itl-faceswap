@@ -22,25 +22,17 @@ export const Home = () => {
   const download = () => {
     if (!image) return;
 
-    const link = document.createElement('a');
-    link.href = image.image;
-    link.download = 'test.png';
-    link.click();
-
-    // fetch(image.image, { mode: 'no-cors' })
-    //   .then((response) => response.blob())
-    //   .then((blob) => {
-    //     const link = document.createElement('a');
-    //     const url = window.URL.createObjectURL(blob);
-    //
-    //     console.log(url);
-    //
-    //     link.href = url;
-    //     link.download = 'свадебный_наряд.png';
-    //     link.click();
-    //     window.URL.revokeObjectURL(url);
-    //   })
-    //   .catch((err) => console.error('Ошибка скачивания изображения:', err));
+    fetch(image.image)
+      .then((response) => response.blob())
+      .then((blob) => {
+        const link = document.createElement('a');
+        const url = window.URL.createObjectURL(blob);
+        link.href = url;
+        link.download = 'свадебный_наряд.png';
+        link.click();
+        window.URL.revokeObjectURL(url);
+      })
+      .catch((err) => console.error('Ошибка скачивания изображения:', err));
   };
 
   return (

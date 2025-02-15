@@ -10,7 +10,6 @@ import styles from './Final.module.scss';
 
 export const Final = () => {
   const [isOpen, setIsOpen] = useState(false);
-  // const [showHint, setShowHint] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
   const { id } = location.state as { id: number; result: string };
@@ -55,20 +54,6 @@ export const Final = () => {
               dangerouslySetInnerHTML={{ __html: qr }}
             />
           )}
-          {/*{!showHint ? (*/}
-          {/*  <div*/}
-          {/*    onClick={() => setShowHint(true)}*/}
-          {/*    className={styles.hintTrigger}*/}
-          {/*  >*/}
-          {/*    Не получается сканировать qr-код?*/}
-          {/*  </div>*/}
-          {/*) : (*/}
-          {/*  <div className={styles.hint}>*/}
-          {/*    Наберите в поиске <span>{TG_BOT_NAME}</span>, затем отправьте*/}
-          {/*    сообщение “<span>{TG_BOT_CODE}</span>”, вам <span>ответит</span>{' '}*/}
-          {/*    бот и <span>пришлет</span> вашу фотографию*/}
-          {/*  </div>*/}
-          {/*)}*/}
           <Button onClick={() => navigate('/')}>На главную</Button>
         </div>
       </Modal>

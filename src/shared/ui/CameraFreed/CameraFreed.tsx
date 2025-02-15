@@ -26,44 +26,34 @@ export const CameraFeed: FC<ICameraFreedProps> = ({
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
-    const videoHeight = 2160;
-    const videoWidth = 3840;
-
-    let animationFrameId: number;
-
-    const drawToCanvas = () => {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-      ctx.save();
-      ctx.translate(0, canvas.height);
-      ctx.rotate((-90 * Math.PI) / 180);
-
-      ctx.drawImage(
-        video,
-        0,
-        0,
-        video.videoWidth,
-        video.videoHeight,
-        0,
-        0,
-        canvas.height,
-        canvas.width,
-      );
-
-      ctx.restore();
-      animationFrameId = requestAnimationFrame(drawToCanvas);
-    };
-
     const handleStream = (stream: MediaStream) => {
-      const video = videoRef.current;
       if (!video) return;
 
       video.srcObject = stream;
-
       video.onloadedmetadata = () => {
         video
           .play()
           .then(() => {
+            canvas.width = video.videoHeight;
+            canvas.height = video.videoWidth;
+
+            const drawToCanvas = () => {
+              ctx.clearRect(0, 0, canvas.width, canvas.height);
+              ctx.save();
+              ctx.translate(canvas.width, 0);
+              ctx.rotate(Math.PI / 2);
+              ctx.scale(-1, 1);
+              ctx.drawImage(
+                video,
+                -video.videoWidth,
+                0,
+                video.videoWidth,
+                video.videoHeight,
+              );
+              ctx.restore();
+              requestAnimationFrame(drawToCanvas);
+            };
+
             drawToCanvas();
             onReady();
           })
@@ -72,10 +62,10 @@ export const CameraFeed: FC<ICameraFreedProps> = ({
     };
 
     navigator.mediaDevices
-      ?.getUserMedia({
+      .getUserMedia({
         video: {
-          width: { ideal: videoWidth },
-          height: { ideal: videoHeight },
+          width: { ideal: 1920 },
+          height: { ideal: 1080 },
           deviceId: DEVICE_ID,
         },
         audio: false,
@@ -84,8 +74,7 @@ export const CameraFeed: FC<ICameraFreedProps> = ({
       .catch((err) => console.error('Error accessing camera:', err));
 
     return () => {
-      cancelAnimationFrame(animationFrameId);
-      if (video.srcObject) {
+      if (video?.srcObject) {
         (video.srcObject as MediaStream)
           .getTracks()
           .forEach((track) => track.stop());
@@ -95,7 +84,17 @@ export const CameraFeed: FC<ICameraFreedProps> = ({
 
   return (
     <div className={clsx(styles.cameraFreed, className)}>
-      <canvas ref={canvasRef} width={2160} height={3840} />
+      <canvas
+        ref={canvasRef}
+        style={{
+          width: '100vw',
+          height: '100vh',
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          outline: '1px solid red',
+        }}
+      />
       <video ref={videoRef} style={{ display: 'none' }} />
     </div>
   );

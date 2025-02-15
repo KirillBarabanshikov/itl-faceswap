@@ -42,6 +42,11 @@ export async function sendImageResult(body: {
       '/image_results',
       formData,
     );
+
+    if (response.status !== 200) {
+      throw new Error('Failed to send image result');
+    }
+
     return response.data;
   } catch (error) {
     throw new Error(`Failed to send image result: ${error}`);

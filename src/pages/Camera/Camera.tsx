@@ -27,6 +27,9 @@ export const Camera = () => {
   const createPhoto = (): Promise<File | undefined> => {
     const canvas = canvasRef.current;
     if (!canvas) return Promise.resolve(undefined);
+    const video = videoRef.current;
+
+    console.log('Video', video?.videoWidth, video?.videoHeight);
 
     return new Promise((resolve) => {
       canvas.toBlob((blob) => {

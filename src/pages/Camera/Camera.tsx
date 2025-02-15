@@ -2,9 +2,10 @@ import { useRef, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 import { sendImageResult } from '@/shared/api/queries.ts';
+import ReloadIcon from '@/shared/assets/icons/reload.svg?react';
 import frame from '@/shared/assets/images/frame.png';
 import { TIMER } from '@/shared/consts';
-import { CameraFeed, Loader, Timer } from '@/shared/ui';
+import { AlertModal, Button, CameraFeed, Loader, Timer } from '@/shared/ui';
 
 import styles from './Camera.module.scss';
 
@@ -12,7 +13,9 @@ export const Camera = () => {
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const [showTimer, setShowTimer] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
+  const [modalState, setModalState] = useState<'loading' | 'error' | null>(
+    null,
+  );
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -43,7 +46,7 @@ export const Camera = () => {
 
   const handleTimerEnd = async () => {
     try {
-      setIsLoading(true);
+      setModalState('loading');
       videoRef.current?.pause();
       setShowTimer(false);
       const userImage = await createPhoto();
@@ -56,15 +59,14 @@ export const Camera = () => {
         const reader = new FileReader();
         reader.onload = (e) => {
           const result = e.target!.result;
+          setModalState(null);
           navigate('/final', { state: { id, result } });
         };
         reader.readAsDataURL(userImage);
       }
     } catch (error) {
       console.error(error);
-      navigate('/');
-    } finally {
-      setIsLoading(false);
+      setModalState('error');
     }
   };
 
@@ -93,9 +95,36 @@ export const Camera = () => {
         <Timer time={TIMER} onEnd={handleTimerEnd} className={styles.timer} />
       )}
       <Loader
-        isLoading={isLoading}
+        isLoading={modalState === 'loading'}
         title={'Пожалуйста, подождите'}
         subtitle={'Ваша фотография обрабатывается'}
+      />
+      <AlertModal
+        isOpen={modalState === 'error'}
+        title={'Ошибка'}
+        subtitle={'Лицо не распознано. Попробуйте еще раз.'}
+        actions={
+          <>
+            <Button
+              onClick={() => {
+                setModalState(null);
+                navigate('/');
+              }}
+            >
+              На главную
+            </Button>
+            <Button
+              variant={'outline'}
+              onClick={() => {
+                setModalState(null);
+                navigate('/scene');
+              }}
+            >
+              <ReloadIcon />
+              Попробовать еще раз
+            </Button>
+          </>
+        }
       />
     </div>
   );

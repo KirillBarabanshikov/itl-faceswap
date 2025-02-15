@@ -34,25 +34,23 @@ export const CameraFeed: FC<ICameraFreedProps> = ({
     const drawToCanvas = () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-      const scale = Math.max(
-        canvas.width / video.videoWidth,
-        canvas.height / video.videoHeight,
-      );
-      const x = (canvas.width - video.videoWidth * scale) / 2;
-      const y = (canvas.height - video.videoHeight * scale) / 2;
-
       ctx.save();
-      ctx.translate(canvas.width, 0); // Зеркальное отображение
-      ctx.scale(-1, 1);
+      ctx.translate(0, canvas.height);
+      ctx.rotate((-90 * Math.PI) / 180);
+
       ctx.drawImage(
         video,
-        x,
-        y,
-        video.videoWidth * scale,
-        video.videoHeight * scale,
+        0,
+        0,
+        video.videoWidth,
+        video.videoHeight,
+        0,
+        0,
+        canvas.height,
+        canvas.width,
       );
-      ctx.restore();
 
+      ctx.restore();
       animationFrameId = requestAnimationFrame(drawToCanvas);
     };
 

@@ -2,9 +2,8 @@ import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 
-import { fetchQr } from '@/shared/api/queries.ts';
+import { fetchImageResult, fetchQr } from '@/shared/api/queries.ts';
 import ReloadIcon from '@/shared/assets/icons/reload.svg?react';
-// import { TG_BOT_CODE, TG_BOT_NAME } from '@/shared/consts';
 import { Button, Modal } from '@/shared/ui';
 
 import styles from './Final.module.scss';
@@ -14,23 +13,23 @@ export const Final = () => {
   // const [showHint, setShowHint] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
-  const { id, result } = location.state as { id: number; result: string };
+  const { id } = location.state as { id: number; result: string };
 
   const { data: qr } = useQuery({
     queryKey: ['qr', id],
     queryFn: () => fetchQr(id),
   });
 
-  // const { data: image } = useQuery({
-  //   queryKey: ['image', id],
-  //   queryFn: () => fetchImageResult(id),
-  // });
+  const { data: image } = useQuery({
+    queryKey: ['image', id],
+    queryFn: () => fetchImageResult(id),
+  });
 
   return (
     <div className={styles.final}>
-      {result && (
+      {image && (
         <img
-          src={result}
+          src={image.image}
           alt={''}
           width={2160}
           height={3840}
